@@ -1,0 +1,394 @@
+import { useState } from "react";
+import { Button } from "/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "/components/ui/card";
+import { Input } from "/components/ui/input";
+import { Label } from "/components/ui/label";
+
+const AkinInternationalPortal = () => {
+  const [activeTab, setActiveTab] = useState("dashboard");
+  const [studentId, setStudentId] = useState("STU-2024-78901");
+  const [password, setPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
+  // Mock student data
+  const studentData = {
+    name: "Alex Johnson",
+    id: "STU-2024-78901",
+    program: "Bachelor of Computer Science",
+    year: "3rd Year",
+    gpa: "3.75",
+    email: "alex.johnson@aiuc.edu",
+    phone: "+1 (555) 123-4567",
+    address: "123 University Ave, Campus City",
+    enrollmentStatus: "Full-time",
+    advisor: "Dr. Sarah Williams",
+    courses: [
+      { code: "CS401", name: "Advanced Algorithms", credits: 4, schedule: "Mon/Wed 10:00-11:30" },
+      { code: "CS402", name: "Machine Learning", credits: 3, schedule: "Tue/Thu 13:00-14:30" },
+      { code: "MATH301", name: "Discrete Mathematics", credits: 3, schedule: "Mon/Wed/Fri 09:00-10:00" },
+      { code: "ENG202", name: "Technical Writing", credits: 3, schedule: "Tue/Thu 11:00-12:30" }
+    ]
+  };
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoggedIn(true);
+  };
+
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+        <Card className="w-full max-w-md">
+          <CardHeader className="space-y-1">
+            <div className="flex items-center justify-center mb-4">
+              <img 
+                src="https://placeholder-image-service.onrender.com/image/120x120?prompt=University%20logo%20with%20blue%20shield%20and%20academic%20symbols&id=5681db7b-6ff2-4459-8821-0d115ed595ee" 
+                alt="Akin International University College official logo with blue shield emblem" 
+                className="h-16 w-16"
+              />
+            </div>
+            <CardTitle className="text-2xl text-center text-blue-800">AIUC Student Portal</CardTitle>
+            <CardDescription className="text-center">
+              Enter your credentials to access your student information
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="studentId">Student ID</Label>
+                <Input
+                  id="studentId"
+                  type="text"
+                  value={studentId}
+                  onChange={(e) => setStudentId(e.target.value)}
+                  placeholder="Enter your student ID"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  required
+                />
+              </div>
+              <Button type="submit" className="w-full bg-blue-700 hover:bg-blue-800">
+                Sign In
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-blue-800 text-white shadow-md">
+        <div className="container mx-auto px-4 py-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <img 
+                src="https://placeholder-image-service.onrender.com/image/50x50?prompt=University%20logo%20with%20blue%20shield%20and%20academic%20symbols&id=5681db7b-6ff2-4459-8821-0d115ed595ee" 
+                alt="Akin International University College official logo" 
+                className="h-10 w-10"
+              />
+              <h1 className="text-xl font-bold">Akin International University College</h1>
+            </div>
+            <div className="flex items-center space-x-4">
+              <span className="text-sm">Welcome, {studentData.name}</span>
+              <Button 
+                variant="outline" 
+                className="border-white text-white hover:bg-white hover:text-blue-800"
+                onClick={() => setIsLoggedIn(false)}
+              >
+                Logout
+              </Button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Navigation */}
+      <nav className="bg-white shadow-sm">
+        <div className="container mx-auto px-4">
+          <div className="flex space-x-8">
+            <button
+              onClick={() => setActiveTab("dashboard")}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === "dashboard"
+                  ? "border-blue-600 text-blue-600"
+                  : "border-transparent text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              Dashboard
+            </button>
+            <button
+              onClick={() => setActiveTab("profile")}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === "profile"
+                  ? "border-blue-600 text-blue-600"
+                  : "border-transparent text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              Student Profile
+            </button>
+            <button
+              onClick={() => setActiveTab("courses")}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === "courses"
+                  ? "border-blue-600 text-blue-600"
+                  : "border-transparent text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              Courses
+            </button>
+            <button
+              onClick={() => setActiveTab("academics")}
+              className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                activeTab === "academics"
+                  ? "border-blue-600 text-blue-600"
+                  : "border-transparent text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              Academics
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Main Content */}
+      <main className="container mx-auto px-4 py-8">
+        {/* Dashboard */}
+        {activeTab === "dashboard" && (
+          <div className="space-y-6">
+            <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg p-6 shadow-lg">
+              <h2 className="text-2xl font-bold mb-2">Welcome back, {studentData.name}!</h2>
+              <p className="text-blue-100">Track your academic journey and stay updated with campus news.</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-medium">GPA</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold text-green-600">{studentData.gpa}</div>
+                  <p className="text-xs text-muted-foreground">Current Grade Point Average</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-medium">Enrolled Courses</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold text-blue-600">{studentData.courses.length}</div>
+                  <p className="text-xs text-muted-foreground">This Semester</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-medium">Credits</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold text-purple-600">
+                    {studentData.courses.reduce((sum, course) => sum + course.credits, 0)}
+                  </div>
+                  <p className="text-xs text-muted-foreground">Total This Semester</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-medium">Status</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold text-green-600">Active</div>
+                  <p className="text-xs text-muted-foreground">{studentData.enrollmentStatus}</p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Recent Announcements</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="p-3 bg-blue-50 rounded-lg">
+                    <h4 className="font-semibold text-blue-800">Registration Opens Next Week</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Spring semester registration begins Monday, December 15th. Check your email for time ticket.
+                    </p>
+                    <span className="text-xs text-blue-600">Posted: 2 days ago</span>
+                  </div>
+                  <div className="p-3 bg-green-50 rounded-lg">
+                    <h4 className="font-semibold text-green-800">Holiday Break Schedule</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Campus will be closed December 24th - January 1st for winter break.
+                    </p>
+                    <span className="text-xs text-green-600">Posted: 5 days ago</span>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Upcoming Events</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="bg-blue-100 text-blue-800 rounded-lg p-2 min-w-12 text-center">
+                      <div className="font-bold">15</div>
+                      <div className="text-xs">DEC</div>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold">Final Exams Week</h4>
+                      <p className="text-sm text-muted-foreground">December 15-20</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="bg-green-100 text-green-800 rounded-lg p-2 min-w-12 text-center">
+                      <div className="font-bold">22</div>
+                      <div className="text-xs">DEC</div>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold">Winter Graduation</h4>
+                      <p className="text-sm text-muted-foreground">Main Auditorium, 2:00 PM</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        )}
+
+        {/* Student Profile */}
+        {activeTab === "profile" && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Student Profile</CardTitle>
+              <CardDescription>Your personal and academic information</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="flex items-center space-x-4">
+                <img 
+                  src="https://placeholder-image-service.onrender.com/image/100x100?prompt=Student%20portrait%20photo%20with%20professional%20appearance&id=5681db7b-6ff2-4459-8821-0d115ed595ee" 
+                  alt="Student profile portrait photo" 
+                  className="h-24 w-24 rounded-full border-4 border-blue-100"
+                />
+                <div>
+                  <h3 className="text-xl font-semibold">{studentData.name}</h3>
+                  <p className="text-muted-foreground">Student ID: {studentData.id}</p>
+                  <p className="text-muted-foreground">{studentData.program}</p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h4 className="font-semibold mb-3 text-blue-800">Personal Information</h4>
+                  <div className="space-y-2">
+                    <p><span className="font-medium">Email:</span> {studentData.email}</p>
+                    <p><span className="font-medium">Phone:</span> {studentData.phone}</p>
+                    <p><span className="font-medium">Address:</span> {studentData.address}</p>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold mb-3 text-blue-800">Academic Information</h4>
+                  <div className="space-y-2">
+                    <p><span className="font-medium">Program:</span> {studentData.program}</p>
+                    <p><span className="font-medium">Year:</span> {studentData.year}</p>
+                    <p><span className="font-medium">Status:</span> {studentData.enrollmentStatus}</p>
+                    <p><span className="font-medium">Academic Advisor:</span> {studentData.advisor}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-4">
+                <Button className="bg-blue-600 hover:bg-blue-700">Update Profile</Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Courses */}
+        {activeTab === "courses" && (
+          <div className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Current Courses - Fall 2024</CardTitle>
+                <CardDescription>Your enrolled courses for this semester</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left py-2 px-4">Course Code</th>
+                        <th className="text-left py-2 px-4">Course Name</th>
+                        <th className="text-left py-2 px-4">Credits</th>
+                        <th className="text-left py-2 px-4">Schedule</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {studentData.courses.map((course, index) => (
+                        <tr key={index} className="border-b hover:bg-gray-50">
+                          <td className="py-3 px-4 font-medium">{course.code}</td>
+                          <td className="py-3 px-4">{course.name}</td>
+                          <td className="py-3 px-4">{course.credits}</td>
+                          <td className="py-3 px-4">{course.schedule}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Course Resources</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <Button variant="outline" className="w-full justify-start">
+                    Course Materials
+                  </Button>
+                  <Button variant="outline" className="w-full justify-start">
+                    Assignment Submissions
+                  </Button>
+                  <Button variant="outline" className="w-full justify-start">
+                    Grades Overview
+                  </Button>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Academic Calendar</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center p-2 bg-blue-50 rounded">
+                      <span className="text-sm">Final Exams</span>
+                      <span className="text-sm font-medium">Dec 15-20</span>
+                    </div>
+                    <div className="flex justify-between items-center p-2 bg-green-50 rounded">
+                      <span className="text-sm">Spring Registration</span>
+                      <span className="text-sm font-medium">Jan 5-10</span>
+                    </div>
+                    <div className="flex justify-between items-center p-2 bg
